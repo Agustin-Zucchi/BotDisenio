@@ -2,29 +2,31 @@ version: "3.1"
 
 stories:
 
-- story: happy path
+- story: chatbot path for intent
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
+  - intent: crear_chatbot
+  - action: utter_request
+  - intent: crear_request
+  - slot_was_set:
+    - request: "intent"
+  - action: utter_datos_intent
+  - intent: agregar_ejemplo
+  - action: action_ejemplos
+  - intent: no_agregar_ejemplos
+  - action: action_guardar_ejemplos
 
-- story: sad path 1
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: affirm
-  - action: utter_happy
 
-- story: sad path 2
+- story: chatbot path for request
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: deny
-  - action: utter_goodbye
+  - intent: crear_chatbot
+  - action: utter_request
+  - intent: crear_request
+  - slot_was_set:
+    - request: "request"
+  - action: utter_datos_response
+  - intent: agregar_ejemplo
+  - action: action_ejemplos
+  - intent: no_agregar_ejemplos
+  - action: action_guardar_ejemplos
+
+

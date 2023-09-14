@@ -1,0 +1,10 @@
+{
+  "story": "story",
+  "saludar": "saludar",
+  "response": "response",
+  "despedir": "despedir",
+  "preguntar_humor": "preguntar_humor",
+  "nombre": "nombre",
+  "intent": "intent",
+  "edad": "edad"
+}

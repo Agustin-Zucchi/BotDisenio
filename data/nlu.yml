@@ -1,91 +1,63 @@
 version: "3.1"
 
 nlu:
-- intent: greet
+- intent: crear_chatbot
   examples: |
-    - hey
-    - hello
-    - hi
-    - hello there
-    - good morning
-    - good evening
-    - moin
-    - hey there
-    - let's go
-    - hey dude
-    - goodmorning
-    - goodevening
-    - good afternoon
+    - quiero crear un chatbot
+    - quiero hacer un chatbot
+    - ayudame a crear un chatbot
+    - voy a diseñar un chatbot
+    - quiero crear un chatbot de cero
+    - necesito ayuda para diseñar un chatbot
 
-- intent: goodbye
+- intent: crear_request
   examples: |
-    - cu
-    - good by
-    - cee you later
-    - good night
-    - bye
-    - goodbye
-    - have a nice day
-    - see you around
-    - bye bye
-    - see you later
+    - el nombre del [story]{"entity":"request","value":"story"} es [saludar]{"entity":"name","value":"saludar"}
+    - quiero crear un [response]{"entity":"request","value":"response"} con el nombre [despedir]{"entity":"name","value":"despedir"}
+    - [story]{"entity":"request","value":"story"}[preguntar_humor]{"entity":"name","value":"preguntar_humor"}
+    - quiero que se llame [nombre]{"entity":"name","value":"nombre"} el [intent]{"entity":"request","value":"intent"}
+    - ponele [edad]{"entity":"name","value":"edad"} al [response]{"entity":"request","value":"response"}
+    - el nombre del [story]{"entity":"request","value":"story"} es [ComeNuevo]{"entity":"name","value":"ComeNuevo"}
+    - quiero crear un [response]{"entity":"request","value":"response"} con el nombre [bocaGrande]{"entity":"name","value":"bocaGrande"}
+    - [story]{"entity":"request","value":"story"}[preguntar_seria]{"entity":"name","value":"preguntar_seria"}
+    - quiero que se llame [novasiteda]{"entity":"name","value":"novasiteda"} el [intent]{"entity":"request","value":"intent"}
+    - ponele [peso]{"entity":"name","value":"peso"} al [response]{"entity":"request","value":"response"}
+    - me gustaria crear un [story]{"entity":"request","value":"story"} con el nombre [bailesFavorito]{"entity":"name","value":"bailesFavorito"}
+    - ponele [altura]{"entity":"name","value":"altura"} al [response]{"entity":"request","value":"response"}
+    - quiero crear un [response]{"entity":"request","value":"response"} con el nombre [bocaChica]{"entity":"name","value":"bocaChica"}
+    - podria crear una [story]{"entity":"request","value":"story"} con el nombre [comidaFavorita]{"entity":"name","value":"comidaFavorita"}
+    - lo podrias denominar [cancionFavorita]{"entity":"name","value":"cancionFavorita"} al [intent]{"entity":"request","value":"intent"}
+    - quiero crear un [response]{"entity":"request","value":"response"} con el nombre [cartucheraColor]{"entity":"name","value":"cartucheraColor"}
+    - [story]{"entity":"request","value":"story"}[Responder_serio]{"entity":"name","value":"Responder_serio"}
+    - quiero que se llame [apellido]{"entity":"name","value":"apellido"} el [intent]{"entity":"request","value":"intent"}
+    - ponele [ligero_color]{"entity":"name","value":"ligero_color"} al [response]{"entity":"request","value":"response"}
+    - el nombre del [story]{"entity":"request","value":"story"} es [preguntar_edad]{"entity":"name","value":"preguntar_edad"}
+    - quiero crear un [response]{"entity":"request","value":"response"} con el nombre [responder_humor]{"entity":"name","value":"responder_humor"}
 
-- intent: affirm
+- intent: agregar_ejemplo
   examples: |
-    - yes
-    - y
-    - indeed
-    - of course
-    - that sounds good
-    - correct
+    - como estas?
+    - que onda?
+    - como andass?
+    - todo bien?
+    - que tal hoy?
+    - tu dia bien?
+    - buenas
+    - hola
+    - buen dia
 
-- intent: deny
+- intent: no_agregar_ejemplos
   examples: |
     - no
-    - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
+    - listo
+    - no quiero ingresar mas ejemplos
+    - no tengo mas ejemplos
+    - no hay mas ejemplos
+    - no quiero cargar mas
+    - no voy a cargas mas ejemplos
+    - ya esta
 
-- intent: mood_great
+  
+- regex: name
   examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
-
-- intent: mood_unhappy
-  examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
-
-- intent: bot_challenge
-  examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
+    - [a-zA-Z0-9]+
