@@ -57,7 +57,7 @@ nlu:
 
 
 ## capaz deberiamos modificar y crear una entidad que pueda optar por solo el valor de los intent y response, ya que no tiene mucho sentido el valor de story
-- intent: modificar_request
+- intent: modificar_request_nombre
   examples: |
     - quiero modificar el [story]{"entity":"request","value":"story"} [saludar]{"entity":"name","value":"saludar"}
     - deseo modificar el [response]{"entity":"request","value":"response"} [despedir]{"entity":"name","value":"despedir"}
@@ -79,6 +79,23 @@ nlu:
     - intento agregar un ejemplo al [intent]{"entity":"request","value":"intent"} [ResponderPeso]{"entity":"name","value":"ResponderPeso"}
     - quiero modificar el [story]{"entity":"request","value":"story"} [peliculaTerror]{"entity":"name","value":"peliculaTerror"}
 
+
+- intent: modificar_request
+  examples: |
+    - quiero modificar una [story]{"entity":"request","value":"story"}
+    - deseo modificar un [response]{"entity":"request","value":"response"}
+    - me gustaria modificar un [story]{"entity":"request","value":"story"}
+    - busco modificar un [intent]{"entity":"request","value":"intent"}
+    - pretendo modificar un [story]{"entity":"request","value":"story"}
+    - quiero agregar mas ejemplos a un [intent]{"entity":"request","value":"intent"}
+    - me gustaria modificar un [story]{"entity":"request","value":"story"}
+    - busco modificar un [intent]{"entity":"request","value":"intent"}
+    - pretendo modificar un [story]{"entity":"request","value":"story"}
+    - quiero agregar mas ejemplos a un [intent]{"entity":"request","value":"intent"}
+
+- intent: darNombreRequest
+  examples: |
+    - /^[\w]+$/
 - regex: name
   examples: |
     - [a-zA-Z0-9]+

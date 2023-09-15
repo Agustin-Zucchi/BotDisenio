@@ -15,7 +15,28 @@ stories:
 - story: chatbot path modificate
   steps:
   - intent: modificar_request
+  - action: action_listar_existentes
+  - intent: modificar_request_nombre
   - action: action_ejemplos
   - intent: agregar_ejemplo
   - action: action_guardar_ejemplo
-  
+
+- story: chatbot path create story
+  steps:
+  - intent: crear_chatbot
+  - action: utter_request
+  - intent: crear_request
+  - slot_was_set:
+    - request: story
+  - action: action_listar_intents_responses
+  - action: utter_pedirIntent
+  - intent: darNombreRequest
+  - action: verificar_datos_intent
+  - slot_was_set:
+    - intent: not null
+  - action: utter_pedirResponse
+  - intent: darNombreRequest
+  - action: verificar_datos_response
+  - slot_was_set:
+    - response: not null
+  - action: action_guardar_story 
