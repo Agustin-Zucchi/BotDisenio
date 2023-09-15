@@ -1,5 +1,11 @@
 {
     "preguntar_humor": {
         "examples": []
+    },
+    "PedirComida": {
+        "examples": [
+            "quiero pedir comida del estilo asiatica",
+            "quiero pedir comida mediterranea"
+        ]
     }
 }

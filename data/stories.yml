@@ -2,31 +2,20 @@ version: "3.1"
 
 stories:
 
-- story: chatbot path for intent
+- story: chatbot path create
   steps:
   - intent: crear_chatbot
   - action: utter_request
   - intent: crear_request
-  - slot_was_set:
-    - request: "intent"
-  - action: utter_datos_intent
+  - action: utter_datos
   - intent: agregar_ejemplo
-  - action: action_ejemplos
-  - intent: no_agregar_ejemplos
-  - action: action_guardar_ejemplos
+  - action: action_guardar_ejemplo
 
 
-- story: chatbot path for request
+- story: chatbot path modificate
   steps:
-  - intent: crear_chatbot
-  - action: utter_request
-  - intent: crear_request
-  - slot_was_set:
-    - request: "request"
-  - action: utter_datos_response
-  - intent: agregar_ejemplo
+  - intent: modificar_request
   - action: action_ejemplos
-  - intent: no_agregar_ejemplos
-  - action: action_guardar_ejemplos
-
-
+  - intent: agregar_ejemplo
+  - action: action_guardar_ejemplo
+  

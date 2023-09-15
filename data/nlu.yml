@@ -45,19 +45,40 @@ nlu:
     - buenas
     - hola
     - buen dia
+    - buenos dias
+    - quiero pedir comida
+    - me gusta el arte
+    - mi deporte favorito es el futbol
+    - me gusta el futbol
+    - quiero salir a tomar mates
+    - me gustaria aprender mas sobre temas relacionados a la programacion
+    - me gustaria pedir comida mexicana
+    - no creo que esa pregunta sea necesaria
 
-- intent: no_agregar_ejemplos
+
+## capaz deberiamos modificar y crear una entidad que pueda optar por solo el valor de los intent y response, ya que no tiene mucho sentido el valor de story
+- intent: modificar_request
   examples: |
-    - no
-    - listo
-    - no quiero ingresar mas ejemplos
-    - no tengo mas ejemplos
-    - no hay mas ejemplos
-    - no quiero cargar mas
-    - no voy a cargas mas ejemplos
-    - ya esta
+    - quiero modificar el [story]{"entity":"request","value":"story"} [saludar]{"entity":"name","value":"saludar"}
+    - deseo modificar el [response]{"entity":"request","value":"response"} [despedir]{"entity":"name","value":"despedir"}
+    - me gustaria modificar el [story]{"entity":"request","value":"story"} [preguntar_humor]{"entity":"name","value":"preguntar_humor"}
+    - busco modificar el [intent]{"entity":"request","value":"intent"} [PedirAyuda]{"entity":"name","value":"PedirAyuda"}
+    - pretendo modificar el [story]{"entity":"request","value":"story"} [preguntar_seria]{"entity":"name","value":"preguntar_seria"}
+    - quiero agregar mas ejemplos al [intent]{"entity":"request","value":"intent"} [triste]{"entity":"name","value":"triste"}
+    - me gustaria agregar un [story]{"entity":"request","value":"story"} [bailesFavorito]{"entity":"name","value":"bailesFavorito"}
+    - busco agregar un [intent]{"entity":"request","value":"intent"} [ComidaDistinta]{"entity":"name","value":"ComidaDistinta"}
+    - pretendo agregar un [response]{"entity":"request","value":"response"} [bocaChica]{"entity":"name","value":"bocaChica"}
+    - quiero modificar el [story]{"entity":"request","value":"story"} [comidaFavorita]{"entity":"name","value":"comidaFavorita"}
+    - deseo modificar el [response]{"entity":"request","value":"response"} [cartucheraColor]{"entity":"name","value":"cartucheraColor"}
+    - me gustaria modificar el [story]{"entity":"request","value":"story"} [preguntar_edad]{"entity":"name","value":"preguntar_edad"}
+    - busco modificar el [intent]{"entity":"request","value":"intent"} [Altura]{"entity":"name","value":"Altura"}
+    - pretendo modificar el [story]{"entity":"request","value":"story"} [responderBuenaOnda]{"entity":"name","value":"responderBuenaOnda"}
+    - quiero agregar mas ejemplos al [intent]{"entity":"request","value":"intent"} [ResponderAltura]{"entity":"name","value":"ResponderAltura"}
+    - el [story]{"entity":"request","value":"story"} [PeliculaNueva]{"entity":"name","value":"PeliculaNueva"} es el que deseo cambiar
+    - el [response]{"entity":"request","value":"response"} [bocaGrande]{"entity":"name","value":"bocaGrande"} le quiero sumar ejemplos
+    - intento agregar un ejemplo al [intent]{"entity":"request","value":"intent"} [ResponderPeso]{"entity":"name","value":"ResponderPeso"}
+    - quiero modificar el [story]{"entity":"request","value":"story"} [peliculaTerror]{"entity":"name","value":"peliculaTerror"}
 
-  
 - regex: name
   examples: |
     - [a-zA-Z0-9]+

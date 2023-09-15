@@ -43,36 +43,57 @@ class ActionAgregarEjemplos(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        example = tracker.latest_message.get("text")
-        examples_actuales = tracker.get_slot("examples")
         request = tracker.get_slot("request")
-        if (example):
-            examples_actuales.append(example)
-            message = "Ejemplo guardado. Si querés podés ingresar otro ejemplo. Hasta ahora el intent " + request + "tiene los siguientes ejemplos: "
-            for i, ex in enumerate(examples_actuales, start=1):
-                message = message + ex + ", "
-            dispatcher.utter_message(text=str(message))
-            return [SlotSet("examples", examples_actuales)]
-        
+        name = tracker.get_slot("name")
+        if request == "intent":
+            ruta = "./actions/intents.json"
+        elif request == "response":
+            ruta = "./actions/response.json"
+        else:
+            ruta = "./actions/story.json"        
+
+        archivo = OperarArchivo.cargar(ruta)
+
+        # Verificar si hay ejemplos
+        if name in archivo and 'examples' in archivo[name] and archivo[name]['examples']:
+            valores = archivo[name]['examples']
+            dispatcher.utter_message(text="Los ejemplos actuales son: " + str(valores) + ". Agrega el ejemplo que usted desea a continuación.")
+            return [SlotSet("examples", valores)]       
+        else:
+            dispatcher.utter_message(text="el nombre que dices no existe en el archivo, si desea empiece de nuevo y crealo.")
+            return [SlotSet("examples", [])]
+
 class ActionGuardarEjemplos(Action):
 
     def name(self) -> Text:
-        return "action_guardar_ejemplos"
+        return "action_guardar_ejemplo"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        examples = tracker.get_slot("examples")
         request = tracker.get_slot("request")
+        name = tracker.get_slot("name")
+        examples = tracker.latest_message.get("text")
+
         if request == "intent":
-            ruta = ".//actions//intents.json"
+            ruta = "./actions/intents.json"
+        elif request == "response":
+            ruta = "./actions/response.json"
         else:
-            ruta = ".//actions//request.json"
+            ruta = "./actions/story.json"        
+
         archivo = OperarArchivo.cargar(ruta)
-        archivo[request]['examples'] = [examples]
-        archivo.update(archivo)
-        OperarArchivo.guardar(archivo, ruta)
-        dispatcher.utter_message(text="Listo. se guardo con exito")
-        return [SlotSet("examples", []), SlotSet("request", "")]
+        ##devolver mensaje del nombre del request 
+        dispatcher.utter_message(text="El nombre del " + request + " es: " + name)
+        if name not in archivo:
+            archivo[name] = {'examples': [examples]}
+            OperarArchivo.guardar(archivo, ruta)
+            dispatcher.utter_message(text="Listo. Se guardó con éxito.")
+        elif 'examples' in archivo[name] and archivo[name]['examples']:
+            archivo[name]['examples'].append(examples)
+            OperarArchivo.guardar(archivo, ruta)
+            dispatcher.utter_message(text="Nombre de " + request + " ya existe. Se ha actualizado la lista de ejemplos.")
+        else:
+            dispatcher.utter_message(text="El nombre de " + request + " ya existe, pero no tiene ejemplos. No se ha realizado ninguna actualización.")
         
-    
+        return [SlotSet("examples", archivo[name]['examples'] if 'examples' in archivo[name] else []), SlotSet("request", "")]
