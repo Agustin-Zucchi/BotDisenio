@@ -158,7 +158,7 @@ class ActionVerificarIntent(Action):
                     dispatcher.utter_message(text="El intent " + name + " existe.")
                 else:
                     dispatcher.utter_message(text="El intent " + name + " no existe.")
-                return [SlotSet("intent", name if name in archivo else None)]
+                return [SlotSet("intentStory", name if name in archivo else None)]
 
 class ActionVerificarResponse(Action):
             
@@ -175,7 +175,7 @@ class ActionVerificarResponse(Action):
                         dispatcher.utter_message(text="El response " + name + " existe.")
                     else:
                         dispatcher.utter_message(text="El response " + name + " no existe.")
-                    return [SlotSet("response", name if name in archivo else None)]
+                    return [SlotSet("responseStory", name if name in archivo else None)]
 
 class ActionSetStory(Action):
                 
@@ -185,16 +185,16 @@ class ActionSetStory(Action):
                     def run(self, dispatcher: CollectingDispatcher,
                             tracker: Tracker,
                             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]: 
-                        intent = tracker.get_slot("intent")
-                        response = tracker.get_slot("response")
+                        intent = tracker.get_slot("intentStory")
+                        response = tracker.get_slot("responseStory")
                         name = tracker.get_slot("name")
                         ruta = "./actions/story.json"
                         archivo = OperarArchivo.cargar(ruta)
-                        if name in archivo
+                        if name in archivo:
                             dispatcher.utter_message(text="El story " + name + " ya existe.")
                         else:
                             archivo[name] = {'intent': intent, 'response': response}
                             OperarArchivo.guardar(archivo, ruta)
                             dispatcher.utter_message(text="Listo. Se guardó con éxito.")
-                        return [SlotSet("intent", ""), SlotSet("response", ""), SlotSet("name", "")]]            
+                        return [SlotSet("intentStory", ""), SlotSet("responseStory", ""), SlotSet("name", "")]        
         

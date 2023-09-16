@@ -12,8 +12,8 @@ entities:
   - name
   - request
   - examples
-  - intent
-  - response
+  - intentStory
+  - responseStory
 
 slots:
   name:
@@ -36,6 +36,16 @@ slots:
     mappings:
     - type: from_entity
       entity: examples
+  intentStory:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: intentStory
+  responseStory:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: responseStory
 
 actions:
   - action_ejemplos

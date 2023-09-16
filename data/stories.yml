@@ -7,6 +7,9 @@ stories:
   - intent: crear_chatbot
   - action: utter_request
   - intent: crear_request
+  - slot_was_set:
+    - request: "intent"
+    - request: "response"
   - action: utter_datos
   - intent: agregar_ejemplo
   - action: action_guardar_ejemplo
@@ -27,16 +30,16 @@ stories:
   - action: utter_request
   - intent: crear_request
   - slot_was_set:
-    - request: story
+    - request: "story"
   - action: action_listar_intents_responses
   - action: utter_pedirIntent
   - intent: darNombreRequest
   - action: verificar_datos_intent
   - slot_was_set:
-    - intent: not null
+    - intentStory: not null
   - action: utter_pedirResponse
   - intent: darNombreRequest
   - action: verificar_datos_response
   - slot_was_set:
-    - response: not null
+    - responseStory: not null
   - action: action_guardar_story 
