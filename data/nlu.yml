@@ -93,9 +93,6 @@ nlu:
     - pretendo modificar un [story]{"entity":"request","value":"story"}
     - quiero agregar mas ejemplos a un [intent]{"entity":"request","value":"intent"}
 
-- intent: darNombreRequest
-  examples: |
-    - /^[\w]+$/i
 - regex: name
   examples: |
     - [a-zA-Z0-9]+

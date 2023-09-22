@@ -7,15 +7,21 @@ intents:
   - no_agregar_ejemplos
   - modificar_request
   - modificar_request_nombre
-  - darNombreRequest
+  
 entities:
   - name
   - request
   - examples
   - intentStory
   - responseStory
+  - actionLast
 
 slots:
+  actionLast:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: actionLast
   name:
     type: text
     mappings:
@@ -53,14 +59,13 @@ actions:
   - action_listar_existentes
   - action_listar_intents_responses
   - action_guardar_story
-  - verificar_datos_intent
-  - verificar_datos_response
-
+  - action_verificar_datos_intent
+  - action_verificar_datos_response
+  - action_pedirIntent
+  - action_pedirResponse
+  - action_listar_storys
+  - action_imprimir_story
 responses:
-  utter_pedirIntent:
-  - text: "Ok. Decime cual de estos intents desea agregar a la story"
-  utter_pedirResponse:
-  - text: "Ok. Decime cual de estos responses desea agregar a la story"
   utter_request:
   - text: "Ok. Decime que deseas crear (si es una story, un intent o un response) junto al nombre que le quieres asignar"
   utter_datos:

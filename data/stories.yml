@@ -14,15 +14,31 @@ stories:
   - intent: agregar_ejemplo
   - action: action_guardar_ejemplo
 
-
 - story: chatbot path modificate
   steps:
   - intent: modificar_request
+  - slot_was_set:
+    - request: "intent"
+    - request: "response"
   - action: action_listar_existentes
   - intent: modificar_request_nombre
   - action: action_ejemplos
   - intent: agregar_ejemplo
   - action: action_guardar_ejemplo
+
+- story: chatbot path extend story
+  steps:
+  - intent: modificar_request
+  - slot_was_set:
+    - request: "story"
+  - action: action_listar_storys
+  - intent: modificar_request_nombre
+  - action: action_imprimir_story
+  - checkpoint: AguardarStory  
+
+
+
+
 
 - story: chatbot path create story
   steps:
@@ -31,32 +47,29 @@ stories:
   - intent: crear_request
   - slot_was_set:
     - request: "story"
+  - checkpoint: AguardarStory
+
+
+-story: checkpoint story
+  steps:
+  - checkpoint: AguardarStory
   - action: action_listar_intents_responses
-  - action: utter_pedirIntent
-  - intent: darNombreRequest
-  - action: verificar_datos_intent
+  - action: action_pedirIntent
+  - slot_was_set:
+    - actionLast: "utter_pedir_response"
+  - intent: agregar_ejemplo
+  - slot_was_set:
+    - actionLast: "utter_pedir_intent"
+  - action: action_verificar_datos_intent
   - slot_was_set:
     - intentStory: not null
-  - action: utter_pedirResponse
-  - intent: darNombreRequest
-  - action: verificar_datos_response
+  - action: action_pedirResponse
+  - slot_was_set:
+    - actionLast: "utter_pedir_response"
+  - intent: agregar_ejemplo
+  - slot_was_set:
+    - actionLast: "utter_pedir_response"
+  - action: action_verificar_datos_response
   - slot_was_set:
     - responseStory: not null
   - action: action_guardar_story 
-  #   - checkpoint: story_1
-
-
-  # - story: chatbot path create story 2
-  #   steps:
-  #   - checkpoint: story_1
-  #   - action: utter_pedirIntent
-  #   - intent: darNombreRequest
-  #   - action: verificar_datos_intent
-  #   - slot_was_set:
-  #     - intentStory: not null
-  #   - action: utter_pedirResponse
-  #   - intent: darNombreRequest
-  #   - action: verificar_datos_response
-  #   - slot_was_set:
-  #     - responseStory: not null
-  #   - action: action_guardar_story 

@@ -8,10 +8,10 @@
 # This is a simple example for a custom action which utters "Hello World!"
 
 from typing import Any, Text, Dict, List
-
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
+from rasa_sdk.events import ActionExecuted
 import random
 import os.path
 import json
@@ -123,78 +123,154 @@ class ActionShowOrder(Action):
 
 class ActionShowAllRequest(Action):
     
-        def name(self) -> Text:
-            return "action_listar_intents_responses"
-    
-        def run(self, dispatcher: CollectingDispatcher,
-                tracker: Tracker,
-                domain: Dict[Text, Any]) -> List[Dict[Text, Any]]: 
-            ruta_intent = "./actions/intents.json"
-            ruta_response = "./actions/response.json"
-            archivo_intent = OperarArchivo.cargar(ruta_intent)
-            archivo_response = OperarArchivo.cargar(ruta_response)
-            if archivo_intent:
-                dispatcher.utter_message(text="Los intents existentes son: " + str(list(archivo_intent.keys()))+ "Para ingresar el nombre del intent que desea, digite 'quiero modificar el nombre del intent'.")
-            else:
-                dispatcher.utter_message(text="No hay intents existentes.")
-            if archivo_response:
-                dispatcher.utter_message(text="Los responses existentes son: " + str(list(archivo_response.keys()))+ "Para ingresar el nombre del response que desea, digite 'quiero modificar el nombre del response'.")
-            else:
-                dispatcher.utter_message(text="No hay responses existentes.")
-            return []
+    def name(self) -> Text:
+        return "action_listar_intents_responses"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]: 
+        ruta_intent = "./actions/intents.json"
+        ruta_response = "./actions/response.json"
+        archivo_intent = OperarArchivo.cargar(ruta_intent)
+        archivo_response = OperarArchivo.cargar(ruta_response)
+        if archivo_intent:
+            dispatcher.utter_message(text="Los intents existentes son: " + str(list(archivo_intent.keys())))
+        else:
+            dispatcher.utter_message(text="No hay intents existentes.")
+        if archivo_response:
+            dispatcher.utter_message(text="Los responses existentes son: " + str(list(archivo_response.keys())))
+        else:
+            dispatcher.utter_message(text="No hay responses existentes.")
+        return []
         
 class ActionVerificarIntent(Action):
         
-            def name(self) -> Text:
-                return "action_verificar_intent"
-        
-            def run(self, dispatcher: CollectingDispatcher,
-                    tracker: Tracker,
-                    domain: Dict[Text, Any]) -> List[Dict[Text, Any]]: 
-                name = tracker.getlatest_message.get("text")
-                ruta = "./actions/intents.json"
-                archivo = OperarArchivo.cargar(ruta)
-                if name in archivo:
-                    dispatcher.utter_message(text="El intent " + name + " existe.")
-                else:
-                    dispatcher.utter_message(text="El intent " + name + " no existe.")
-                return [SlotSet("intentStory", name if name in archivo else None)]
+    def name(self) -> Text:
+        return "action_verificar_datos_intent"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]: 
+        name = tracker.latest_message.get("text")
+        ruta = "./actions/intents.json"
+        archivo = OperarArchivo.cargar(ruta)
+        if name in archivo:
+            dispatcher.utter_message(text="El intent " + name + " existe.")
+        else:
+            dispatcher.utter_message(text="El intent " + name + " no existe.")
+        return [SlotSet("intentStory", name if name in archivo else None)]
 
 class ActionVerificarResponse(Action):
             
-                def name(self) -> Text:
-                    return "action_verificar_response"
-            
-                def run(self, dispatcher: CollectingDispatcher,
-                        tracker: Tracker,
-                        domain: Dict[Text, Any]) -> List[Dict[Text, Any]]: 
-                    name = tracker.getlatest_message.get("text")
-                    ruta = "./actions/response.json"
-                    archivo = OperarArchivo.cargar(ruta)
-                    if name in archivo:
-                        dispatcher.utter_message(text="El response " + name + " existe.")
-                    else:
-                        dispatcher.utter_message(text="El response " + name + " no existe.")
-                    return [SlotSet("responseStory", name if name in archivo else None)]
+    def name(self) -> Text:
+        return "action_verificar_datos_response"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]: 
+        name = tracker.latest_message.get("text")
+        ruta = "./actions/response.json"
+        archivo = OperarArchivo.cargar(ruta)
+        if name in archivo:
+            dispatcher.utter_message(text="El response " + name + " existe.")
+        else:
+            dispatcher.utter_message(text="El response " + name + " no existe.")
+        return [SlotSet("responseStory", name if name in archivo else None)]
 
 class ActionSetStory(Action):
-                
-                    def name(self) -> Text:
-                        return "action_set_story"
-                
-                    def run(self, dispatcher: CollectingDispatcher,
-                            tracker: Tracker,
-                            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]: 
-                        intent = tracker.get_slot("intentStory")
-                        response = tracker.get_slot("responseStory")
-                        name = tracker.get_slot("name")
-                        ruta = "./actions/story.json"
-                        archivo = OperarArchivo.cargar(ruta)
-                        if name in archivo:
-                            dispatcher.utter_message(text="El story " + name + " ya existe.")
-                        else:
-                            archivo[name] = {'intent': intent, 'response': response}
-                            OperarArchivo.guardar(archivo, ruta)
-                            dispatcher.utter_message(text="Listo. Se guardó con éxito.")
-                        return [SlotSet("intentStory", ""), SlotSet("responseStory", ""), SlotSet("name", "")]        
+
+    def name(self) -> Text:
+        return "action_guardar_story"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]: 
+        intent = tracker.get_slot("intentStory")
+        response = tracker.get_slot("responseStory")
+        name = tracker.get_slot("name")
+        ruta = "./actions/story.json"
+        archivo = OperarArchivo.cargar(ruta)
+        ##crear un contador interno para saber cuantos intents y responses se han agregado
         
+        if name in archivo:
+            archivo[name]["intent"].append(intent)
+            archivo[name]["response"].append(response)
+            OperarArchivo.guardar(archivo, ruta)
+            dispatcher.utter_message(text="Listo. Se guardó con éxito.")
+        else:
+            archivo[name] = {"contador": "0",'intent': intent, 'response': response}
+            OperarArchivo.guardar(archivo, ruta)
+            dispatcher.utter_message(text="Listo. Se guardó con éxito.")
+        return [SlotSet("intentStory", ""), SlotSet("responseStory", ""), SlotSet("name", "")]        
+
+
+class utterPedirIntent(Action):
+    def name(self) -> Text:
+        return "action_pedirIntent"
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+            dispatcher.utter_message(text="Ingrese el nombre del intent que desea.")
+            return [SlotSet("actionLast", "utter_pedir_intent")]
+
+class utterPedirResponse(Action):
+    def name(self) -> Text:
+        return "action_pedirResponse"
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+            dispatcher.utter_message(text="Ingrese el nombre del response que desea.")
+            return [SlotSet("actionLast", "utter_pedir_response")]
+
+
+class listnameStory(Action):
+    def name(self) -> Text:
+        return "action_listar_storys"
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]: 
+        ruta_story = "./actions/intents.json"
+        archivo = OperarArchivo.cargar(ruta_story)
+        if archivo:
+            dispatcher.utter_message(text="Los intents existentes son: " + str(list(archivo.keys())))
+        else:
+            dispatcher.utter_message(text="No hay intents existentes.")
+        return []
+        
+class ImprimirStory(Action):
+
+    def name(self) -> Text:
+        return "action_imprimir_story"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        # Obtener el nombre del slot
+        name = tracker.get_slot("name")
+        ruta = "./actions/story.json"
+        archivo = OperarArchivo.cargar(ruta)
+
+        if not archivo:
+            dispatcher.utter_message(text="No se encontró el archivo de historias.")
+            return []
+
+        if name not in archivo:
+            dispatcher.utter_message(text=f"No se encontró la historia con el nombre '{name}'.")
+            return []
+
+        # Obtener intents y responses para el nombre de la historia dado
+        intents = archivo[name].get("intents", [])
+        responses = archivo[name].get("responses", [])
+
+        if not intents or not responses:
+            dispatcher.utter_message(text=f"No se encontraron intents o responses para la historia '{name}'.")
+            return []
+
+        # Mostrar el flujo de intents y responses
+        message = ""
+        for i, (intent, response) in enumerate(zip(intents, responses)):
+            message += f"\n**Paso {i + 1}**:\nIntent: {intent}\nResponse: {response}\n"
+
+        dispatcher.utter_message(text=f"Flujo de intents y responses para la historia '{name}':{message}")
+        return []
+
