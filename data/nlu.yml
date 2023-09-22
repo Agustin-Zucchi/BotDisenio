@@ -32,7 +32,7 @@ nlu:
     - quiero que se llame [apellido]{"entity":"name","value":"apellido"} el [intent]{"entity":"request","value":"intent"}
     - ponele [ligero_color]{"entity":"name","value":"ligero_color"} al [response]{"entity":"request","value":"response"}
     - el nombre del [story]{"entity":"request","value":"story"} es [preguntar_edad]{"entity":"name","value":"preguntar_edad"}
-    - quiero crear un [response]{"entity":"request","value":"response"} con el nombre [responder_humor]{"entity":"name","value":"responder_humor"}
+    - quiero crear un [story]{"entity":"request","value":"story"} con el nombre [responder_humor]{"entity":"name","value":"responder_humor"}
 
 - intent: agregar_ejemplo
   examples: |
@@ -95,7 +95,7 @@ nlu:
 
 - intent: darNombreRequest
   examples: |
-    - /^[\w]+$/
+    - /^[\w]+$/i
 - regex: name
   examples: |
     - [a-zA-Z0-9]+

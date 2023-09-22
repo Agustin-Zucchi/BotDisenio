@@ -43,3 +43,20 @@ stories:
   - slot_was_set:
     - responseStory: not null
   - action: action_guardar_story 
+  #   - checkpoint: story_1
+
+
+  # - story: chatbot path create story 2
+  #   steps:
+  #   - checkpoint: story_1
+  #   - action: utter_pedirIntent
+  #   - intent: darNombreRequest
+  #   - action: verificar_datos_intent
+  #   - slot_was_set:
+  #     - intentStory: not null
+  #   - action: utter_pedirResponse
+  #   - intent: darNombreRequest
+  #   - action: verificar_datos_response
+  #   - slot_was_set:
+  #     - responseStory: not null
+  #   - action: action_guardar_story 
