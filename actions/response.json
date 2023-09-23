@@ -1,5 +1,14 @@
 {
     "preguntar_humor": {
         "examples": []
+    },
+    "responseContext": {
+        "examples": []
+    },
+    "chistes": {
+        "examples": []
+    },
+    "preguntar_chiste": {
+        "examples": []
     }
 }

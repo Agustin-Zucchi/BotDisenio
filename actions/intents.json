@@ -7,5 +7,14 @@
             "quiero pedir comida del estilo asiatica",
             "quiero pedir comida mediterranea"
         ]
+    },
+    "intentChiste": {
+        "examples": []
+    },
+    "intentPreguntarHora": {
+        "examples": []
+    },
+    "intentPreguntarTiempo": {
+        "examples": []
     }
 }

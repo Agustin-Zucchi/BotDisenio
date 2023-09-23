@@ -184,25 +184,32 @@ class ActionSetStory(Action):
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]: 
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         intent = tracker.get_slot("intentStory")
         response = tracker.get_slot("responseStory")
         name = tracker.get_slot("name")
         ruta = "./actions/story.json"
         archivo = OperarArchivo.cargar(ruta)
-        ##crear un contador interno para saber cuantos intents y responses se han agregado
-        
-        if name in archivo:
-            archivo[name]["intent"].append(intent)
-            archivo[name]["response"].append(response)
-            OperarArchivo.guardar(archivo, ruta)
-            dispatcher.utter_message(text="Listo. Se guardó con éxito.")
-        else:
-            archivo[name] = {"contador": "0",'intent': intent, 'response': response}
-            OperarArchivo.guardar(archivo, ruta)
-            dispatcher.utter_message(text="Listo. Se guardó con éxito.")
-        return [SlotSet("intentStory", ""), SlotSet("responseStory", ""), SlotSet("name", "")]        
 
+        if not archivo:
+            archivo = {}
+
+        if name in archivo:
+            # Verifica si la historia ya existe y agrega los intents y responses
+            contador = str(int(archivo[name]["contador"]) + 1)
+            archivo[name]["contador"] = contador
+            archivo[name]["intent " + contador] = intent
+            archivo[name]["response " + contador] = response
+            dispatcher.utter_message(text=f"Se han agregado intent y response a la historia '{name}'")
+        else:
+            # Si la historia no existe, la crea con el nuevo intent y response
+            archivo[name] = {"contador": "0", 'intent 0': intent, 'response 0': response}
+            dispatcher.utter_message(text=f"Se ha creado una nueva historia '{name}' con intent y response")
+
+        # Guarda el archivo actualizado
+        OperarArchivo.guardar(archivo, ruta)
+
+        return [SlotSet("intentStory", ""), SlotSet("responseStory", ""), SlotSet("name", ""), SlotSet("actionLast", "")]
 
 class utterPedirIntent(Action):
     def name(self) -> Text:
@@ -229,10 +236,10 @@ class listnameStory(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]: 
-        ruta_story = "./actions/intents.json"
+        ruta_story = "./actions/story.json"
         archivo = OperarArchivo.cargar(ruta_story)
         if archivo:
-            dispatcher.utter_message(text="Los intents existentes son: " + str(list(archivo.keys())))
+            dispatcher.utter_message(text="Las story existentes son: " + str(list(archivo.keys())))
         else:
             dispatcher.utter_message(text="No hay intents existentes.")
         return []
@@ -245,7 +252,7 @@ class ImprimirStory(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        # Obtener el nombre del slot
+        # Obtener el nombre de la historia desde el slot
         name = tracker.get_slot("name")
         ruta = "./actions/story.json"
         archivo = OperarArchivo.cargar(ruta)
@@ -258,19 +265,11 @@ class ImprimirStory(Action):
             dispatcher.utter_message(text=f"No se encontró la historia con el nombre '{name}'.")
             return []
 
-        # Obtener intents y responses para el nombre de la historia dado
-        intents = archivo[name].get("intents", [])
-        responses = archivo[name].get("responses", [])
+        # Obtener todo el contenido de la historia seleccionada
+        historia_contenido = archivo[name]
 
-        if not intents or not responses:
-            dispatcher.utter_message(text=f"No se encontraron intents o responses para la historia '{name}'.")
-            return []
+        # Mostrar todo el contenido de la historia
+        message = f"Contenido de la historia '{name}':\n{historia_contenido}"
+        dispatcher.utter_message(text=message)
 
-        # Mostrar el flujo de intents y responses
-        message = ""
-        for i, (intent, response) in enumerate(zip(intents, responses)):
-            message += f"\n**Paso {i + 1}**:\nIntent: {intent}\nResponse: {response}\n"
-
-        dispatcher.utter_message(text=f"Flujo de intents y responses para la historia '{name}':{message}")
         return []
-

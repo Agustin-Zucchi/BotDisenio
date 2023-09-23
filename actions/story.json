@@ -1,14 +1,13 @@
 {
     "CaminoPedirComida": {
-        "intent": "nombreintent",
-        "response": "nombreResponse"
+        "intent": "PedirComida",
+        "response": "preguntar_humor"
     },
-    "casaNueva": {
+    "nuevaHistoria": {
+        "contador": "1",
         "intent": "PedirComida",
         "response": "preguntar_humor",
-        "intent":"nuevoDas",
-        "response":"preguntar_hcomida"
+        "intent 1": "intentChiste",
+        "response 1": "chistes"
     }
 }
-
-

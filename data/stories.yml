@@ -22,6 +22,9 @@ stories:
     - request: "response"
   - action: action_listar_existentes
   - intent: modificar_request_nombre
+  - slot_was_set:
+    - request: "intent"
+    - request: "response"
   - action: action_ejemplos
   - intent: agregar_ejemplo
   - action: action_guardar_ejemplo
@@ -33,12 +36,10 @@ stories:
     - request: "story"
   - action: action_listar_storys
   - intent: modificar_request_nombre
+  - slot_was_set:
+    - request: "story"
   - action: action_imprimir_story
   - checkpoint: AguardarStory  
-
-
-
-
 
 - story: chatbot path create story
   steps:
@@ -50,7 +51,7 @@ stories:
   - checkpoint: AguardarStory
 
 
--story: checkpoint story
+- story: checkpoint story
   steps:
   - checkpoint: AguardarStory
   - action: action_listar_intents_responses

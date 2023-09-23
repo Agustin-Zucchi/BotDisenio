@@ -54,6 +54,15 @@ nlu:
     - me gustaria aprender mas sobre temas relacionados a la programacion
     - me gustaria pedir comida mexicana
     - no creo que esa pregunta sea necesaria
+    - intentPreguntarTiempo
+    - preguntar_tiempo
+    - comida_Nueva
+    - ComidaMexicana
+    - vivir_sobre_nuevo
+    - intentComedia
+    - responseCarcajada
+    - intent_Comida_Rapida
+    - response_reir
 
 
 ## capaz deberiamos modificar y crear una entidad que pueda optar por solo el valor de los intent y response, ya que no tiene mucho sentido el valor de story
@@ -77,7 +86,7 @@ nlu:
     - el [story]{"entity":"request","value":"story"} [PeliculaNueva]{"entity":"name","value":"PeliculaNueva"} es el que deseo cambiar
     - el [response]{"entity":"request","value":"response"} [bocaGrande]{"entity":"name","value":"bocaGrande"} le quiero sumar ejemplos
     - intento agregar un ejemplo al [intent]{"entity":"request","value":"intent"} [ResponderPeso]{"entity":"name","value":"ResponderPeso"}
-    - quiero modificar el [story]{"entity":"request","value":"story"} [peliculaTerror]{"entity":"name","value":"peliculaTerror"}
+    - quiero modificar el [intent]{"entity":"request","value":"intent"} [peliculaTerror]{"entity":"name","value":"peliculaTerror"}
 
 
 - intent: modificar_request
@@ -92,6 +101,8 @@ nlu:
     - busco modificar un [intent]{"entity":"request","value":"intent"}
     - pretendo modificar un [story]{"entity":"request","value":"story"}
     - quiero agregar mas ejemplos a un [intent]{"entity":"request","value":"intent"}
+    - quiero agrandar un [response]{"entity":"request","value":"response"}
+    - me gustaria agrandar una [story]{"entity":"request","value":"story"}
 
 - regex: name
   examples: |
