@@ -33,6 +33,7 @@ nlu:
     - ponele [ligero_color]{"entity":"name","value":"ligero_color"} al [response]{"entity":"request","value":"response"}
     - el nombre del [story]{"entity":"request","value":"story"} es [preguntar_edad]{"entity":"name","value":"preguntar_edad"}
     - quiero crear un [story]{"entity":"request","value":"story"} con el nombre [responder_humor]{"entity":"name","value":"responder_humor"}
+    - quiero crear un [response]{"entity":"request","value":"response"} con el nombre [Responder_Comedia]{"entity":"name","value":"Responder_Comedia"}
 
 - intent: agregar_ejemplo
   examples: |
@@ -64,8 +65,6 @@ nlu:
     - intent_Comida_Rapida
     - response_reir
 
-
-## capaz deberiamos modificar y crear una entidad que pueda optar por solo el valor de los intent y response, ya que no tiene mucho sentido el valor de story
 - intent: modificar_request_nombre
   examples: |
     - quiero modificar el [story]{"entity":"request","value":"story"} [saludar]{"entity":"name","value":"saludar"}

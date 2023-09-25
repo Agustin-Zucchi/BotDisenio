@@ -1,20 +1,5 @@
 {
-    "preguntar_humor": {
-        "examples": []
-    },
-    "PedirComida": {
-        "examples": [
-            "quiero pedir comida del estilo asiatica",
-            "quiero pedir comida mediterranea"
-        ]
-    },
-    "intentChiste": {
-        "examples": []
-    },
-    "intentPreguntarHora": {
-        "examples": []
-    },
-    "intentPreguntarTiempo": {
+    "ex1": {
         "examples": []
     }
 }

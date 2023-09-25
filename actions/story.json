@@ -1,13 +1,6 @@
 {
-    "CaminoPedirComida": {
-        "intent": "PedirComida",
-        "response": "preguntar_humor"
-    },
-    "nuevaHistoria": {
-        "contador": "1",
-        "intent": "PedirComida",
-        "response": "preguntar_humor",
-        "intent 1": "intentChiste",
-        "response 1": "chistes"
+    "story1": {
+        "intent": "ex1",
+        "response": "ex2"
     }
 }

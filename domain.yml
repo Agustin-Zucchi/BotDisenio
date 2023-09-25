@@ -65,12 +65,9 @@ actions:
   - action_pedirResponse
   - action_listar_storys
   - action_imprimir_story
+
 responses:
   utter_request:
   - text: "Ok. Decime que deseas crear (si es una story, un intent o un response) junto al nombre que le quieres asignar"
   utter_datos:
   - text: "Ok. El nombre es {name}  del {request} es {name}, podrias darme un ejemplo de como deberia ser el {request}"
-  utter_datos_intent:
-  - text: "Ok. El nombre del {request} es {name}, Ahora de un ejemplo para este intent, se recomienda ingresar al menos 5 ejemplos"
-  utter_datos_response:
-  - text: "Ok. El nombre del {request} es {name}, Ahora de un ejemplo para este response, con un ejemplo alcanza"
