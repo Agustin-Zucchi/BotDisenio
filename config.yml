@@ -42,9 +42,9 @@ policies:
 - name: MemoizationPolicy
 - name: RulePolicy
 - name: UnexpecTEDIntentPolicy
-  max_history: 25
+  max_history: 22
   epochs: 100
 - name: TEDPolicy
-  max_history: 25
+  max_history: 22
   epochs: 100
   constrain_similarities: true
